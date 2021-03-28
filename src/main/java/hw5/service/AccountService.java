@@ -2,7 +2,6 @@ package hw5.service;
 
 import hw5.database.Database;
 import hw5.entity.Account;
-import hw5.entity.Client;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,14 +16,14 @@ public class AccountService {
     private static final String SAVE_ACCOUNT_QUERY = "INSERT INTO accounts (number, client_id,value) VALUES (?,?,?)";
     private static final String UPDATE_ACCOUNT_QUERY = "UPDATE accounts set number=?, value=? where client_id=?";
     private static final String DELETE_ACCOUNT_QUERY = "DELETE FROM accounts where value=?";
-    private static final String SELECT_NUMBER_FROM_ACCOUNTS_QUERY = "SELECT NUMBER FROM accounts WHERE VALUE>?";
+    private static final String SELECT_NUMBER_FROM_ACCOUNTS_QUERY = "SELECT NUMBER FROM accounts where value >?";
 
     public List<Account> getAllAccounts() {
         List<Account> accounts = new ArrayList<>();
 
         try (Connection connection = Database.getConnection();
              Statement statement = connection.createStatement()) {
-              ResultSet resultSet = statement.executeQuery(SELECT_ALL_ACCOUNTS_QUERY);
+            ResultSet resultSet = statement.executeQuery(SELECT_ALL_ACCOUNTS_QUERY);
             while (resultSet.next()) {
                 connection.setAutoCommit(false);
                 Account account = new Account();
@@ -46,8 +45,8 @@ public class AccountService {
                      prepareStatement(SAVE_ACCOUNT_QUERY)) {
             connection.setAutoCommit(false);
             preparedStatement.setString(1, account.getNumber());
-            preparedStatement.setInt(2,account.getClient_id());
-            preparedStatement.setDouble(3,account.getValue());
+            preparedStatement.setInt(2, account.getClient_id());
+            preparedStatement.setDouble(3, account.getValue());
             //init settings
             preparedStatement.execute();
             connection.commit();
@@ -55,14 +54,15 @@ public class AccountService {
             e.printStackTrace();
         }
     }
+
     public void updateAccount(Account account) {
         try (Connection connection = Database.getConnection();
              PreparedStatement preparedStatement = connection.
                      prepareStatement(UPDATE_ACCOUNT_QUERY)) {
             connection.setAutoCommit(false);
             preparedStatement.setString(1, account.getNumber());
-            preparedStatement.setDouble(2,account.getValue());
-            preparedStatement.setInt(3,account.getClient_id());
+            preparedStatement.setDouble(2, account.getValue());
+            preparedStatement.setInt(3, account.getClient_id());
 
             //init settings
             preparedStatement.execute();
@@ -71,27 +71,33 @@ public class AccountService {
             e.printStackTrace();
         }
     }
+
     public void deleteAccount(Account account) {
         try (Connection connection = Database.getConnection();
              PreparedStatement preparedStatement = connection.
                      prepareStatement(DELETE_ACCOUNT_QUERY)) {
             connection.setAutoCommit(false);
-            preparedStatement.setDouble(1,account.getValue());
-            //init settings
+            preparedStatement.setDouble(1, account.getValue());
             preparedStatement.execute();
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public List<Account> getNumberFromAccount(Account account) {
+
+    public List<Account> getNumberFromAccount(double value) {
         List<Account> accounts = new ArrayList<>();
 
         try (Connection connection = Database.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SELECT_NUMBER_FROM_ACCOUNTS_QUERY);
+             PreparedStatement preparedStatement = connection.
+                     prepareStatement(SELECT_NUMBER_FROM_ACCOUNTS_QUERY)) {
+            connection.setAutoCommit(false);
+            preparedStatement.setDouble(1,value);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                connection.setAutoCommit(false);
+
+                Account account =new Account();
 
                 account.setNumber(resultSet.getString("number"));
 
@@ -103,7 +109,5 @@ public class AccountService {
         }
         return accounts;
     }
-
-
 }
 

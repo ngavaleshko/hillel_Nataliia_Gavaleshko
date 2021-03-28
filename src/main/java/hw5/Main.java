@@ -7,13 +7,12 @@ import hw5.service.AccountService;
 import hw5.service.ClientService;
 import hw5.service.StatusService;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         ClientService clientService = new ClientService();
-        List<Client> clients =clientService.getAll();
+        List<Client> clients = clientService.getAll();
         System.out.println(clients);
 
         Client client = new Client();
@@ -56,13 +55,13 @@ public class Main {
         accountService.deleteAccount(account3);
 
         StatusService statusService = new StatusService();
-        List<Status> statuses =statusService.getAllStatuses();
+        List<Status> statuses = statusService.getAllStatuses();
         System.out.println(statuses);
-//
-//        Status status = new Status();
-//        status.setDescription("myDescription");
-//        status.setAlias("Good");
-//        statusService.saveStatuses(status);
+
+        Status status = new Status();
+        status.setDescription("myDescription");
+        status.setAlias("Good");
+        statusService.saveStatuses(status);
 
         Status status1 = new Status();
         status1.setDescription("Perfect");
@@ -73,23 +72,24 @@ public class Main {
         status2.setId(4);
         statusService.deleteStatuses(status2);
 
-        Client client4 = new Client();
-        client4.setPhone(380998827722L);
-        clientService.searchClientByPhone(client4);
-        System.out.println(client4);
+        System.out.println("SELECT_CLIENT_BY_PHONE: " + clientService.searchClientByPhone(380998827722L));
 
-//        Account account4 = new Account();
-//        account4.setValue(789632.12365);
-//       accountService.getNumberFromAccount(account4);
-//        System.out.println(account4);
+
+        System.out.println("Get value more 2: " + accountService.getNumberFromAccount(10));
 
         Client client5 = new Client();
         clientService.getAllWhereId();
         System.out.println(clientService.getAllWhereId());
 
+        clientService.addColumn(client);
+
         Client client6 = new Client();
+        client6.setAge(20);
+        client6.setId(8);
+        clientService.addAge(client6);
+
         clientService.getAllWhere3Tables();
-        System.out.println(clientService.getAllWhere3Tables());
+        System.out.println("Join 3 Table where clients.age>18: " + clientService.getAllWhere3Tables());
 
     }
 }
