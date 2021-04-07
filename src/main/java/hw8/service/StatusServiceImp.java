@@ -31,6 +31,7 @@ public class StatusServiceImp implements StatusService {
 
     @Override
     public void update(Status status) {
-
+        logger.debug(status.toString());
+        statusDao.update(status);
     }
 }
