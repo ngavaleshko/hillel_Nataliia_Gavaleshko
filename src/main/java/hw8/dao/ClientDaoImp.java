@@ -42,7 +42,8 @@ public class ClientDaoImp implements ClientDao {
 
     @Override
     public void delete(Client client) {
-        logger.debug(client.toString());
+        logger.debug(String.format("delete. client{id=%d, email=%s, phone = %d}",
+                client.getId(), client.getEmail(), client.getPhone()));
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

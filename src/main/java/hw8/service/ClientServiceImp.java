@@ -19,7 +19,8 @@ public class ClientServiceImp implements ClientService {
     }
     @Override
     public void update (Client client) {
-        logger.debug(client.toString());
+        logger.debug(String.format("update. client{id=%d, email=%s, phone = %d}",
+                client.getId(), client.getEmail(), client.getPhone()));
         clientDao.update(client);
     }
     @Override
@@ -35,7 +36,8 @@ public class ClientServiceImp implements ClientService {
 
     @Override
     public void delete(Client client){
-        logger.debug(String.format("client.findById {id = %d}", client));
+        logger.debug(String.format("delete. client{id=%d, email=%s, phone = %d}",
+                client.getId(), client.getEmail(), client.getPhone()));
         clientDao.delete(client);
     }
     @Override

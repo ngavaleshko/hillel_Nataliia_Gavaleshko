@@ -17,9 +17,6 @@ public class Main {
 
         Faker faker = new Faker();
 
-
-
-
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

@@ -15,7 +15,8 @@ public class AccountDaoImp implements AccountDao {
 
     @Override
     public void save(Account account) {
-        logger.debug(account.toString());
+        logger.debug(String.format("save. account{id=%d, client_id=%d, number = %s}",
+                account.getId(), account.getClientId(), account.getNumber()));
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -49,7 +50,8 @@ public class AccountDaoImp implements AccountDao {
 
     @Override
     public void delete(Account account) {
-        logger.debug(account.toString());
+        logger.debug(String.format("delete. account{id=%d, client_id=%d, number = %s}",
+                account.getId(), account.getClientId(), account.getNumber()));
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
