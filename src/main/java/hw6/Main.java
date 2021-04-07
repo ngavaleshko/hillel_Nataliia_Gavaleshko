@@ -46,8 +46,7 @@ public class Main {
         account.setClientId(2);
         accountService.save(account);
 
-        Account byID = accountService.getById(11);
-        System.out.println("account get by id: " +byID);
+        System.out.println("account get by id: " +accountService.getById(11));
 
         List<Account> accounts = accountService.getAll();
 
