@@ -2,7 +2,6 @@ package hw27.Interfaces;
 
 public interface CInterface {
     default void simple(int a, int b) {
-
         int S = a / b;
         System.out.println(" S = a/b = " + S);
     }
