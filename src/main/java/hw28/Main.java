@@ -11,14 +11,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
 
-        PredicateInterface<Double> isIncome = (income) -> {
-
-            if (income > 1500.0) {
-                return true;
-            }
-            return false;
-        };
-
+        PredicateInterface<Double> isIncome = income -> income > 1500.0;
         System.out.println(isIncome.incomeChecker(15555.0));
 
 
